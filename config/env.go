@@ -42,11 +42,11 @@ func getBool(key string, defaultValue bool) bool {
 }
 
 type DatabaseConfig struct {
-	url string
+	URL string
 }
 
 func NewDatabaseConfig() *DatabaseConfig {
 	return &DatabaseConfig{
-		url: getString("DATABASE_URL", ""),
+		URL: getString("DATABASE_URL", ""),
 	}
 }
