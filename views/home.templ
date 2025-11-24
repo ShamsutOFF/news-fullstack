@@ -4,13 +4,16 @@ import "news-fullstack/views/layout"
 import "news-fullstack/views/components"
 import "news-fullstack/views/types"
 
-templ HomePage(categories []types.Category) {
+templ HomePage(categories []types.Category, banners []types.BannerCard) {
     @layout.Layout(layout.LayoutProps{
         Title: "Новостной портал - Главная",
         MetaDescription: "Самые свежие новости по всем категориям",
     }) {
         <div class="home-page">
+        <!-- Список категорий -->
             @components.CategoriesRow(categories)
+                <!-- Баннерная секция -->
+            @components.BannersRow(banners)
         </div>
     }
 }
@@ -21,6 +24,12 @@ templ HomePageStyle() {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        .banner-section {
+            display: flex;
+            justify-content: flex-start; /* Выравниваем по левому краю */
+            margin: 30px 0;
         }
 
         .hero-section {
