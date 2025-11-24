@@ -10,20 +10,7 @@ templ HomePage(categories []types.Category) {
         MetaDescription: "Самые свежие новости по всем категориям",
     }) {
         <div class="home-page">
-            <!-- Контент страницы -->
-            <section class="hero-section">
-                <h1 class="hero-title">Добро пожаловать на Новостной портал</h1>
-                <p class="hero-subtitle">Выберите интересующую категорию</p>
-            </section>
-
-            <!-- Наш список категорий -->
             @components.CategoriesRow(categories)
-
-            <!-- Можно добавить другие секции позже -->
-            <section class="news-preview">
-                <h2>Самые популярные новости</h2>
-                <!-- Здесь будет список новостей -->
-            </section>
         </div>
     }
 }
