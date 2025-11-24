@@ -47,12 +47,14 @@ templ HeaderStyle() {
         .header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* Центрируем карточки по горизонтали */
             height: 70px;
             background: #ffffff;
             padding: 0 20px;
             border-bottom: 1px solid #f0f0f0;
             font-family: Arial, sans-serif;
+            margin: 0 auto; /* Центрируем весь контейнер*/
+            width: 1400px; /* Ограничиваем максимальную ширину как в футере */
         }
 
         /* Левая часть - навигация */

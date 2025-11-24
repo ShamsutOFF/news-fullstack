@@ -45,7 +45,7 @@ func HomePage(categories []types.Category) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"home-page\"><!-- Контент страницы --><section class=\"hero-section\"><h1 class=\"hero-title\">Добро пожаловать на Новостной портал</h1><p class=\"hero-subtitle\">Выберите интересующую категорию</p></section><!-- Наш список категорий -->")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"home-page\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -53,7 +53,7 @@ func HomePage(categories []types.Category) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<!-- Можно добавить другие секции позже --><section class=\"news-preview\"><h2>Самые популярные новости</h2><!-- Здесь будет список новостей --></section></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
