@@ -2,16 +2,12 @@ package pages
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"news-fullstack/pkg/tadapter"
+	"news-fullstack/views"
 )
 
 type PagesHandler struct {
 	router fiber.Router
-}
-
-// Данные для шаблона
-type TemplateData struct {
-	Categories []string
-	Message    string
 }
 
 func NewPagesHandler(router fiber.Router) {
@@ -24,28 +20,20 @@ func NewPagesHandler(router fiber.Router) {
 }
 
 func (h *PagesHandler) home(c *fiber.Ctx) error {
-	// Создаем список категорий
-	categories := []string{
-		"🍕 Еда",
-		"⚽ Спорт",
-		"🚗 Машины",
-		"🐶 Животные",
-		"💻 Технологии",
-		"🎬 Фильмы",
-		"🎵 Музыка",
-		"🌆 Путешествия",
-		"💼 Бизнес",
-		"🏥 Здоровье",
-	}
-
-	// Подготовка данных для шаблона
-	data := TemplateData{
-		Categories: categories,
-		Message:    "Добро пожаловать на наш новостной портал! Выберите категорию выше.",
-	}
-
-	// Рендерим шаблон с данными
-	return c.Render("home", data)
+	//categories := []string{
+	//	"🍕 Еда",
+	//	"⚽ Спорт",
+	//	"🚗 Машины",
+	//	"🐶 Животные",
+	//	"💻 Технологии",
+	//	"🎬 Фильмы",
+	//	"🎵 Музыка",
+	//	"🌆 Путешествия",
+	//	"💼 Бизнес",
+	//	"🏥 Здоровье",
+	//}
+	component := views.Hello("Adel")
+	return tadapter.Render(c, component)
 }
 
 func (h *PagesHandler) error(c *fiber.Ctx) error {

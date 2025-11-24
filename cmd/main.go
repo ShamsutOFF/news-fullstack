@@ -9,7 +9,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/template/html/v2" // ДЛЯ ШАБЛОНОВ!
 	slogfiber "github.com/samber/slog-fiber"
 )
 
@@ -19,12 +18,7 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
 
-	// Инициализация шаблонов - ВАЖНО!
-	engine := html.New("./templates", ".html")
-
-	app := fiber.New(fiber.Config{
-		Views: engine, // Подключаем шаблоны к Fiber
-	})
+	app := fiber.New()
 
 	app.Use(slogfiber.New(logger))
 	app.Use(recover.New())
