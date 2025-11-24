@@ -16,12 +16,12 @@ templ CategoriesRow(categories []types.Category) {
 templ CategoriesRowStyle() {
     <style>
         .categories-container {
-            width: 100%; /* Растягивание на всю ширину */
-            background: #F5F5F5; /* Светло-серый фон */
-            border-radius: 12px; /* Закругление как у кнопок */
-            padding: 20px; /* Увеличим padding для лучшего визуала */
+            width: 100%;
+            background: #F5F5F5;
+            border-radius: 12px;
+            padding: 20px;
             margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Лёгкая тень для глубины */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             box-sizing: border-box;
         }
 
@@ -29,16 +29,14 @@ templ CategoriesRowStyle() {
             display: flex;
             gap: 16px;
             overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
-            justify-content: center; /* Центрируем карточки по горизонтали */
-            flex-wrap: wrap; /* Разрешаем перенос на следующую строку если не помещаются */
-            max-width: 1400px; /* Ограничиваем максимальную ширину как в футере */
-            margin: 0 auto; /* Центрируем весь контейнер с карточками */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         .categories-row::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+            display: none;
         }
     </style>
 }

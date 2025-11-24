@@ -43,18 +43,20 @@ templ Header() {
 }
 
 templ HeaderStyle() {
-    <style>
+ <style>
         .header {
             display: flex;
             align-items: center;
-            justify-content: center; /* Центрируем карточки по горизонтали */
+            justify-content: space-between; /* Изменено с center на space-between */
             height: 70px;
             background: #ffffff;
             padding: 0 20px;
             border-bottom: 1px solid #f0f0f0;
             font-family: Arial, sans-serif;
-            margin: 0 auto; /* Центрируем весь контейнер*/
-            width: 1400px; /* Ограничиваем максимальную ширину как в футере */
+            max-width: 1500px; /* Добавлено - такая же ширина как у контента */
+            margin: 0 auto; /* Центрируем */
+            width: 100%; /* Занимает всю доступную ширину */
+            box-sizing: border-box;
         }
 
         /* Левая часть - навигация */
@@ -62,6 +64,7 @@ templ HeaderStyle() {
             display: flex;
             align-items: center;
             gap: 40px;
+            flex-shrink: 0; /* Не сжимается */
         }
 
         .nav-item {
@@ -70,6 +73,7 @@ templ HeaderStyle() {
             font-size: 16px;
             font-weight: normal;
             transition: color 0.2s ease;
+            white-space: nowrap; /* Текст не переносится */
         }
 
         .nav-item:hover {
@@ -96,31 +100,34 @@ templ HeaderStyle() {
         /* Центральная часть - пустое пространство */
         .header-space {
             flex: 1;
-            min-width: 100px;
+            min-width: 20px; /* Уменьшено */
         }
 
         /* Правая часть - поиск и профиль */
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px; /* Уменьшено */
+            flex-shrink: 0; /* Не сжимается */
         }
 
         /* Поисковая строка */
         .search-container {
             position: relative;
-            min-width: 250px;
+            min-width: 200px; /* Уменьшено */
+            flex-shrink: 1; /* Может сжиматься */
         }
 
         .search-input {
             width: 100%;
-            padding: 10px 40px 10px 15px;
+            padding: 8px 35px 8px 12px; /* Уменьшено */
             border: none;
             border-radius: 8px;
             background: #f5f5f5;
             font-size: 14px;
             outline: none;
             transition: background 0.2s ease;
+            box-sizing: border-box;
         }
 
         .search-input:focus {
@@ -133,21 +140,23 @@ templ HeaderStyle() {
 
         .search-icon {
             position: absolute;
-            right: 12px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             color: #666666;
+            font-size: 12px;
         }
 
         /* Профиль пользователя */
         .profile-container {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 5px 10px;
+            gap: 6px; /* Уменьшено */
+            padding: 4px 8px; /* Уменьшено */
             border-radius: 20px;
             cursor: pointer;
             transition: background 0.2s ease;
+            flex-shrink: 0; /* Не сжимается */
         }
 
         .profile-container:hover {
@@ -155,17 +164,18 @@ templ HeaderStyle() {
         }
 
         .profile-avatar {
-            width: 40px;
-            height: 40px;
+            width: 32px; /* Уменьшено */
+            height: 32px; /* Уменьшено */
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #f0f0f0;
         }
 
         .profile-name {
-            font-size: 14px;
+            font-size: 13px; /* Уменьшено */
             color: #000000;
             font-weight: normal;
+            white-space: nowrap;
         }
     </style>
 }
