@@ -44,7 +44,42 @@ func (h *PagesHandler) home(c *fiber.Ctx) error {
 		},
 	}
 
-	component := views.HomePage(categories, banners)
+	articles := []types.ArticleCard{
+		{
+			ImageURL:     "/public/images/art1_img.jpg",
+			Title:        "Открытие сезона байдарок",
+			Description:  "Сегодня был открыт сезон путешествия на байдарках, где вы можете поучаствовать в увлекательных маршрутах по живописным озерам и рекам нашего региона.",
+			AuthorName:   "Михаил Аршинов",
+			AuthorAvatar: "/public/images/author_avatar1.jpg",
+			PublishDate:  "Август 18, 2025",
+		},
+		{
+			ImageURL:     "/public/images/art2_img.jpg",
+			Title:        "Выбери правильный ноутбук для задач",
+			Description:  "От верного выбора ноутбука зависит не только удобство, но и эффективность работы...",
+			AuthorName:   "Анна Петрова",
+			AuthorAvatar: "/public/images/author_avatar2.jpg",
+			PublishDate:  "Август 15, 2025",
+		},
+		{
+			ImageURL:     "/public/images/art3_img.jpg",
+			Title:        "Создание автомобилей с автопилотом",
+			Description:  "Электические автомобили без водителя скоро станут реальностью, где нам не придётся ...",
+			AuthorName:   "Дмитрий Соколов",
+			AuthorAvatar: "/public/images/author_avatar3.jpg",
+			PublishDate:  "Август 12, 2025",
+		},
+		{
+			ImageURL:     "/public/images/art4_img.jpg",
+			Title:        "Как быстро приготовить вкусный обед",
+			Description:  "Сегодня поговорим о том, как можно быстро и эффективно приготовить обед для ...",
+			AuthorName:   "Дмитрий Соколов",
+			AuthorAvatar: "/public/images/author_avatar4.jpg",
+			PublishDate:  "Август 12, 2025",
+		},
+	}
+
+	component := views.HomePage(categories, banners, articles)
 	return tadapter.Render(c, component)
 }
 

@@ -10,3 +10,12 @@ type BannerCard struct {
 	Title       string
 	Description string
 }
+
+type ArticleCard struct {
+	ImageURL     string
+	Title        string
+	Description  string
+	AuthorName   string
+	AuthorAvatar string
+	PublishDate  string
+}

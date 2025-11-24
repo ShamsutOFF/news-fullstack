@@ -12,7 +12,11 @@ import "news-fullstack/views/layout"
 import "news-fullstack/views/components"
 import "news-fullstack/views/types"
 
-func HomePage(categories []types.Category, banners []types.BannerCard) templ.Component {
+func HomePage(
+	categories []types.Category,
+	banners []types.BannerCard,
+	articles []types.ArticleCard,
+) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -57,7 +61,7 @@ func HomePage(categories []types.Category, banners []types.BannerCard) templ.Com
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><div class=\"banners-section\"><!-- Баннерная секция -->")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<!-- Баннерная секция --><div class=\"banners-section\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -65,7 +69,15 @@ func HomePage(categories []types.Category, banners []types.BannerCard) templ.Com
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><!-- Секция с карточками статей -->")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.ArticlesRow(articles).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -103,7 +115,7 @@ func HomePageStyle() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\r\n        .page-container {\r\n            max-width: 1500px;\r\n            margin: 0 auto;\r\n            padding: 0 20px;\r\n        }\r\n\r\n        .banners-section {\r\n            display: flex;\r\n            gap: 20px;\r\n            justify-content: flex-start;\r\n            margin: 30px 0;\r\n            flex-wrap: wrap;\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<style>\r\n        .page-container {\r\n            max-width: 1500px;\r\n            margin: 0 auto;\r\n            padding: 0 20px;\r\n        }\r\n\r\n        .banners-section {\r\n            display: flex;\r\n            gap: 20px;\r\n            justify-content: flex-start;\r\n            margin: 30px 0;\r\n            flex-wrap: wrap;\r\n        }\r\n\r\n        .articles-section {\r\n            margin: 40px 0;\r\n        }\r\n\r\n        .section-title {\r\n            font-size: 28px;\r\n            color: #333;\r\n            margin-bottom: 24px;\r\n            font-weight: bold;\r\n            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\r\n        }\r\n\r\n        .articles-grid {\r\n            display: grid;\r\n            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));\r\n            gap: 24px;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
