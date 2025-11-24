@@ -1,0 +1,56 @@
+package views
+
+import "news-fullstack/views/layout"
+import "news-fullstack/views/components"
+import "news-fullstack/views/types"
+
+templ HomePage(categories []types.Category) {
+    @layout.Layout(layout.LayoutProps{
+        Title: "Новостной портал - Главная",
+        MetaDescription: "Самые свежие новости по всем категориям",
+    }) {
+        <div class="home-page">
+            @components.CategoriesRow(categories)
+        </div>
+    }
+}
+
+templ HomePageStyle() {
+    <style>
+        .home-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 0 40px 0;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .news-preview {
+            margin-top: 60px;
+            padding: 40px 0;
+        }
+
+        .news-preview h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
+}
