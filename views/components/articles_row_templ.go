@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "news-fullstack/views/types"
 
-func CategoriesRow(categories []types.Category) templ.Component {
+func ArticlesRow(articles []types.ArticleCard) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -31,16 +31,16 @@ func CategoriesRow(categories []types.Category) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = CategoriesRowStyle().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ArticlesRowStyle().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"categories-container\"><div class=\"categories-row\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"articles-section\"><h2 class=\"section-title\">Последние новости</h2><div class=\"articles-grid\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, category := range categories {
-			templ_7745c5c3_Err = CategoryCard(category).Render(ctx, templ_7745c5c3_Buffer)
+		for _, article := range articles {
+			templ_7745c5c3_Err = ArticleCard(article).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -53,7 +53,7 @@ func CategoriesRow(categories []types.Category) templ.Component {
 	})
 }
 
-func CategoriesRowStyle() templ.Component {
+func ArticlesRowStyle() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -74,7 +74,7 @@ func CategoriesRowStyle() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\r\n        .categories-container {\r\n            width: 100%;\r\n            background: #F5F5F5;\r\n            border-radius: 12px;\r\n            padding: 20px;\r\n            margin: 20px 0;\r\n            box-shadow: 0 2px 8px rgba(0,0,0,0.05);\r\n            box-sizing: border-box;\r\n        }\r\n\r\n        .categories-row {\r\n            display: flex;\r\n            gap: 16px;\r\n            overflow-x: auto;\r\n            scrollbar-width: none;\r\n            -ms-overflow-style: none;\r\n            justify-content: space-between;\r\n            flex-wrap: wrap;\r\n        }\r\n\r\n        .categories-row::-webkit-scrollbar {\r\n            display: none;\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\r\n        .articles-section {\r\n            margin: 40px 0;\r\n        }\r\n\r\n        .section-title {\r\n            font-size: 28px;\r\n            color: #333;\r\n            margin-bottom: 24px;\r\n            font-weight: bold;\r\n            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\r\n        }\r\n\r\n        .articles-grid {\r\n            display: grid;\r\n            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));\r\n            gap: 24px;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

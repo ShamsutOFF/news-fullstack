@@ -12,7 +12,11 @@ import "news-fullstack/views/layout"
 import "news-fullstack/views/components"
 import "news-fullstack/views/types"
 
-func HomePage(categories []types.Category) templ.Component {
+func HomePage(
+	categories []types.Category,
+	banners []types.BannerCard,
+	articles []types.ArticleCard,
+) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -45,7 +49,11 @@ func HomePage(categories []types.Category) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"home-page\">")
+			templ_7745c5c3_Err = HomePageStyle().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <div class=\"page-container\"><!-- Список категорий -->")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -53,7 +61,23 @@ func HomePage(categories []types.Category) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<!-- Баннерная секция --><div class=\"banners-section\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.BannersRow(banners).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><!-- Секция с карточками статей -->")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.ArticlesRow(articles).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -91,7 +115,7 @@ func HomePageStyle() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\r\n        .home-page {\r\n            max-width: 1200px;\r\n            margin: 0 auto;\r\n            padding: 0 20px;\r\n        }\r\n\r\n        .hero-section {\r\n            text-align: center;\r\n            padding: 60px 0 40px 0;\r\n        }\r\n\r\n        .hero-title {\r\n            font-size: 2.5rem;\r\n            color: #333;\r\n            margin-bottom: 16px;\r\n            font-weight: 700;\r\n        }\r\n\r\n        .hero-subtitle {\r\n            font-size: 1.2rem;\r\n            color: #666;\r\n            margin-bottom: 40px;\r\n        }\r\n\r\n        .news-preview {\r\n            margin-top: 60px;\r\n            padding: 40px 0;\r\n        }\r\n\r\n        .news-preview h2 {\r\n            font-size: 1.8rem;\r\n            color: #333;\r\n            margin-bottom: 30px;\r\n            text-align: center;\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<style>\r\n        .page-container {\r\n            max-width: 1500px;\r\n            margin: 0 auto;\r\n            padding: 0 20px;\r\n        }\r\n\r\n        .banners-section {\r\n            display: flex;\r\n            gap: 20px;\r\n            justify-content: flex-start;\r\n            margin: 30px 0;\r\n            flex-wrap: wrap;\r\n        }\r\n\r\n        .articles-section {\r\n            margin: 40px 0;\r\n        }\r\n\r\n        .section-title {\r\n            font-size: 28px;\r\n            color: #333;\r\n            margin-bottom: 24px;\r\n            font-weight: bold;\r\n            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\r\n        }\r\n\r\n        .articles-grid {\r\n            display: grid;\r\n            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));\r\n            gap: 24px;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

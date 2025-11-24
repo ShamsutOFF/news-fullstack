@@ -1,0 +1,43 @@
+package components
+
+import "news-fullstack/views/types"
+
+templ BannersRow(banners []types.BannerCard) {
+    @BannersRowStyle()
+    <div class="banners-container">
+        <div class="banners-row">
+            for _, banner := range banners {
+                @BannerCard(banner)
+            }
+        </div>
+    </div>
+}
+
+templ BannersRowStyle() {
+    <style>
+        .banners-container {
+            width: 100%; /* Растягивание на всю ширину */
+            border-radius: 12px; /* Закругление как у кнопок */
+            padding: 20px; /* Увеличим padding для лучшего визуала */
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Лёгкая тень для глубины */
+            box-sizing: border-box;
+        }
+
+        .banners-row {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            justify-content: flex-start;
+            flex-wrap: wrap; /* Разрешаем перенос на следующую строку если не помещаются */
+            max-width: 1400px; /* Ограничиваем максимальную ширину как в футере */
+            margin: 0 auto; /* Центрируем весь контейнер с карточками */
+        }
+
+        .categories-row::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+    </style>
+}
