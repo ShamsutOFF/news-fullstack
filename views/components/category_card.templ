@@ -1,10 +1,12 @@
-package views
+package components
 
-templ CategoryCard(name string, imageURL string) {
+import "news-fullstack/views/types"
+
+templ CategoryCard(category types.Category) {
     @CategoryCardStyle()
     <button class="category-card" type="button">
-        <img class="card-background" src={ templ.URL(imageURL) } alt={ name } />
-        <span class="card-text">#{ name }</span>
+        <img class="card-background" src={ templ.URL(category.ImageURL) } alt={ category.Name } />
+        <span class="card-text">#{ category.Name }</span>
     </button>
 }
 

@@ -1,0 +1,39 @@
+package components
+
+import "news-fullstack/views/types"
+
+templ CategoriesRow(categories []types.Category) {
+    @CategoriesRowStyle()
+    <div class="categories-container">
+        <div class="categories-row">
+            for _, category := range categories {
+                @CategoryCard(category)
+            }
+        </div>
+    </div>
+}
+
+templ CategoriesRowStyle() {
+    <style>
+        .categories-container {
+            width: 100%; /* Растягивание на всю ширину */
+            background: #F5F5F5; /* Светло-серый фон */
+            border-radius: 12px; /* Закругление как у кнопок */
+            padding: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Лёгкая тень для глубины */
+        }
+
+        .categories-row {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        .categories-row::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+    </style>
+}

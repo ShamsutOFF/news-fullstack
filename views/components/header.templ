@@ -1,0 +1,169 @@
+package components
+
+templ Header() {
+    @HeaderStyle()
+    <header class="header">
+        <!-- Левая часть - навигация -->
+        <nav class="header-nav">
+            <a href="/news" class="nav-item nav-item--active">Новости</a>
+            <a href="/categories" class="nav-item nav-item--dropdown">
+                Категории
+                <span class="dropdown-arrow">▼</span>
+            </a>
+            <a href="/contacts" class="nav-item">Контакты</a>
+        </nav>
+
+        <!-- Центральная часть - пустое пространство -->
+        <div class="header-space"></div>
+
+        <!-- Правая часть - поиск и профиль -->
+        <div class="header-actions">
+            <!-- Поисковая строка -->
+            <div class="search-container">
+                <input
+                    type="text"
+                    placeholder="Найти Новость"
+                    class="search-input"
+                />
+                <span class="search-icon">🔍</span>
+            </div>
+
+            <!-- Профиль пользователя -->
+            <div class="profile-container">
+                <img
+                    src="/public/images/avatar.jpg"
+                    alt="Аватар"
+                    class="profile-avatar"
+                />
+                <span class="profile-name">Василий</span>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+        </div>
+    </header>
+}
+
+templ HeaderStyle() {
+    <style>
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            background: #ffffff;
+            padding: 0 20px;
+            border-bottom: 1px solid #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Левая часть - навигация */
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #000000;
+            font-size: 16px;
+            font-weight: normal;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #666666;
+        }
+
+        .nav-item--active {
+            color: #FF0000;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .nav-item--dropdown {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dropdown-arrow {
+            font-size: 12px;
+            color: #666666;
+        }
+
+        /* Центральная часть - пустое пространство */
+        .header-space {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        /* Правая часть - поиск и профиль */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Поисковая строка */
+        .search-container {
+            position: relative;
+            min-width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: none;
+            border-radius: 8px;
+            background: #f5f5f5;
+            font-size: 14px;
+            outline: none;
+            transition: background 0.2s ease;
+        }
+
+        .search-input:focus {
+            background: #eeeeee;
+        }
+
+        .search-input::placeholder {
+            color: #999999;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666666;
+        }
+
+        /* Профиль пользователя */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .profile-container:hover {
+            background: #f9f9f9;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #f0f0f0;
+        }
+
+        .profile-name {
+            font-size: 14px;
+            color: #000000;
+            font-weight: normal;
+        }
+    </style>
+}
