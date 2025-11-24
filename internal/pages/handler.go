@@ -3,7 +3,7 @@ package pages
 import (
 	"github.com/gofiber/fiber/v2"
 	"news-fullstack/pkg/tadapter"
-	"news-fullstack/views"
+	views "news-fullstack/views/components"
 )
 
 type PagesHandler struct {
@@ -20,19 +20,7 @@ func NewPagesHandler(router fiber.Router) {
 }
 
 func (h *PagesHandler) home(c *fiber.Ctx) error {
-	//categories := []string{
-	//	"🍕 Еда",
-	//	"⚽ Спорт",
-	//	"🚗 Машины",
-	//	"🐶 Животные",
-	//	"💻 Технологии",
-	//	"🎬 Фильмы",
-	//	"🎵 Музыка",
-	//	"🌆 Путешествия",
-	//	"💼 Бизнес",
-	//	"🏥 Здоровье",
-	//}
-	component := views.Hello("Adel")
+	component := views.CategoryCard("Животные", "/public/images/animal_img.jpg")
 	return tadapter.Render(c, component)
 }
 
