@@ -4,6 +4,7 @@ import (
 	"log"
 	"log/slog"
 	"news-fullstack/config"
+	"news-fullstack/internal/api"
 	"news-fullstack/internal/pages"
 	"os"
 
@@ -25,6 +26,7 @@ func main() {
 	app.Static("/public", "./public")
 
 	pages.NewPagesHandler(app)
+	api.NewApiHandler(app)
 
 	slog.Info("starting server", "port", 3000)
 	log.Fatal(app.Listen(":3000"))
