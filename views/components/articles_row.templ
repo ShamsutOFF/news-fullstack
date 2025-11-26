@@ -3,29 +3,21 @@ package components
 import "news-fullstack/views/types"
 
 templ ArticlesRow(articles []types.ArticleCard) {
-    @ArticlesRowStyle()
-    <div class="articles-section">
-        <h2 class="section-title">Последние новости</h2>
-        <div class="articles-grid">
-            for _, article := range articles {
-                @ArticleCard(article)
-            }
-        </div>
-    </div>
+	@ArticlesRowStyle()
+	<div class="articles-section">
+		@Title("Последние новости")
+		<div class="articles-grid">
+			for _, article := range articles {
+				@ArticleCard(article)
+			}
+		</div>
+	</div>
 }
 
 templ ArticlesRowStyle() {
-    <style>
+	<style>
         .articles-section {
             margin: 40px 0;
-        }
-
-        .section-title {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 24px;
-            font-weight: bold;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .articles-grid {

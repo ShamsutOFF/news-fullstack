@@ -1,0 +1,85 @@
+package widgets
+
+import "news-fullstack/views/components"
+
+templ RegisterForm() {
+	@RegisterFormStyle()
+	<div class="register-form">
+		<div id="register-result"></div>
+		@components.Title("Регистрация на сайте")
+		<form
+			hx-post="/api/register"
+			hx-trigger="submit"
+			hx-target="#register-result"
+			hx-swap="innerHTML"
+		>
+			<div class="form-fields">
+				@components.Input(components.InputProps{
+					Label:       "Имя",
+					Placeholder: "",
+					Name:        "name",
+				})
+				@components.Input(components.InputProps{
+					Label:       "Email",
+					Placeholder: "",
+					Name:        "email",
+				})
+				@components.Input(components.InputProps{
+					Label:       "Пароль",
+					Placeholder: "",
+					Name:        "password",
+				})
+			</div>
+			<div class="form-button">
+				@components.SubmitButton() {
+					<div class="vacancy-form__submit">Зарегистрироваться</div>
+					<div class="vacancy-form__loader"></div>
+				}
+			</div>
+		</form>
+	</div>
+}
+
+templ RegisterFormStyle() {
+	<style>
+        .register-form {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: var(--color-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-button {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Стили для сообщений об ошибках */
+        .error-message {
+            color: var(--color-primary);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .htmx-request .submit-button {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Показываем ошибки когда они есть */
+        [data-error] .error-message {
+            display: block;
+        }
+    </style>
+}

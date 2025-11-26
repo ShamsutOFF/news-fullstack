@@ -8,9 +8,7 @@ package components
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "news-fullstack/views/types"
-
-func BannersRow(banners []types.BannerCard) templ.Component {
+func SubmitButton() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -31,21 +29,19 @@ func BannersRow(banners []types.BannerCard) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = BannersRowStyle().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = SubmitButtonStyle().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"banners-container\"><div class=\"banners-row\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<button type=\"submit\" class=\"submit-button\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, banner := range banners {
-			templ_7745c5c3_Err = BannerCard(banner).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
+		templ_7745c5c3_Err = templ_7745c5c3_Var1.Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</button>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,7 +49,7 @@ func BannersRow(banners []types.BannerCard) templ.Component {
 	})
 }
 
-func BannersRowStyle() templ.Component {
+func SubmitButtonStyle() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -74,7 +70,7 @@ func BannersRowStyle() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\n        .banners-container {\n            width: 100%; /* Растягивание на всю ширину */\n            border-radius: 12px; /* Закругление как у кнопок */\n            padding: 20px; /* Увеличим padding для лучшего визуала */\n            margin: 20px 0;\n            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Лёгкая тень для глубины */\n            box-sizing: border-box;\n        }\n\n        .banners-row {\n            display: flex;\n            gap: 16px;\n            overflow-x: auto;\n            scrollbar-width: none; /* Firefox */\n            -ms-overflow-style: none; /* IE/Edge */\n            justify-content: flex-start;\n            flex-wrap: wrap; /* Разрешаем перенос на следующую строку если не помещаются */\n            max-width: 1400px; /* Ограничиваем максимальную ширину как в футере */\n            margin: 0 auto; /* Центрируем весь контейнер с карточками */\n        }\n\n        .banners-row::-webkit-scrollbar {\n            display: none; /* Chrome/Safari */\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\n    .submit-button{\n        height: 80px;\n        padding: 14px 28px;\n        background-color: var(--color-primary);\n        color: var(--color-white);\n        border: none;\n        border-radius: 20px;\n        cursor: pointer;\n        font-size: 18px;\n        font-style: normal;\n        font-weight: 600;\n    }\n\n    .submit-button:hover {\n        background-color: var(--color-primary-hover);\n    }\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

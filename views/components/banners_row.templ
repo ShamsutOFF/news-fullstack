@@ -3,18 +3,18 @@ package components
 import "news-fullstack/views/types"
 
 templ BannersRow(banners []types.BannerCard) {
-    @BannersRowStyle()
-    <div class="banners-container">
-        <div class="banners-row">
-            for _, banner := range banners {
-                @BannerCard(banner)
-            }
-        </div>
-    </div>
+	@BannersRowStyle()
+	<div class="banners-container">
+		<div class="banners-row">
+			for _, banner := range banners {
+				@BannerCard(banner)
+			}
+		</div>
+	</div>
 }
 
 templ BannersRowStyle() {
-    <style>
+	<style>
         .banners-container {
             width: 100%; /* Растягивание на всю ширину */
             border-radius: 12px; /* Закругление как у кнопок */
@@ -36,7 +36,7 @@ templ BannersRowStyle() {
             margin: 0 auto; /* Центрируем весь контейнер с карточками */
         }
 
-        .categories-row::-webkit-scrollbar {
+        .banners-row::-webkit-scrollbar {
             display: none; /* Chrome/Safari */
         }
     </style>

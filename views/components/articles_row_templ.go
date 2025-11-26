@@ -35,7 +35,15 @@ func ArticlesRow(articles []types.ArticleCard) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"articles-section\"><h2 class=\"section-title\">Последние новости</h2><div class=\"articles-grid\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"articles-section\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = Title("Последние новости").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"articles-grid\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -45,7 +53,7 @@ func ArticlesRow(articles []types.ArticleCard) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -74,7 +82,7 @@ func ArticlesRowStyle() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\r\n        .articles-section {\r\n            margin: 40px 0;\r\n        }\r\n\r\n        .section-title {\r\n            font-size: 28px;\r\n            color: #333;\r\n            margin-bottom: 24px;\r\n            font-weight: bold;\r\n            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\r\n        }\r\n\r\n        .articles-grid {\r\n            display: grid;\r\n            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));\r\n            gap: 24px;\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\r\n        .articles-section {\r\n            margin: 40px 0;\r\n        }\r\n\r\n        .articles-grid {\r\n            display: grid;\r\n            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));\r\n            gap: 24px;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

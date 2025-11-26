@@ -1,8 +1,11 @@
 package pages
 
 import (
+	"log"
+
 	"news-fullstack/pkg/tadapter"
 	"news-fullstack/views"
+	"news-fullstack/views/pages"
 	"news-fullstack/views/types"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,9 +19,10 @@ func NewPagesHandler(router fiber.Router) {
 	handler := &PagesHandler{
 		router: router,
 	}
-	api := handler.router.Group("/api")
-	api.Get("/", handler.home)
-	api.Get("/error", handler.error)
+	// api := handler.router.Group("/api")
+	handler.router.Get("/", handler.home)
+	handler.router.Get("/register", handler.register)
+	handler.router.Get("/error", handler.error)
 }
 
 func (h *PagesHandler) home(c *fiber.Ctx) error {
@@ -43,7 +47,6 @@ func (h *PagesHandler) home(c *fiber.Ctx) error {
 			Description: "Сегодня мы рассмотрим технику быстрого создания музыки за счёт использования...",
 		},
 	}
-
 	articles := []types.ArticleCard{
 		{
 			ImageURL:     "/public/images/art1_img.jpg",
@@ -80,6 +83,12 @@ func (h *PagesHandler) home(c *fiber.Ctx) error {
 	}
 
 	component := views.HomePage(categories, banners, articles)
+	return tadapter.Render(c, component)
+}
+
+func (h *PagesHandler) register(c *fiber.Ctx) error {
+	log.Println("@@@ register")
+	component := pages.RegisterPage()
 	return tadapter.Render(c, component)
 }
 

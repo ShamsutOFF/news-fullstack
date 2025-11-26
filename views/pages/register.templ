@@ -1,0 +1,28 @@
+package pages
+
+import "news-fullstack/views/layout"
+import "news-fullstack/views/widgets"
+
+templ RegisterPage() {
+    @layout.Layout(layout.LayoutProps{
+        Title: "Регистрация - Новостной портал", 
+        MetaDescription: "Зарегистрируйтесь на новостном портале для доступа к персонализированному контенту",
+    }) {
+        @RegisterPageStyle()
+        <div class="register-page">
+            @widgets.RegisterForm()
+        </div>
+    }
+}
+
+templ RegisterPageStyle() {
+    <style>
+        .register-page {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+    </style>
+}
