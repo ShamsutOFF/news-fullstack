@@ -94,7 +94,7 @@ func RegisterPageStyle() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\n        .register-page {\n            min-height: 80vh;\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            padding: 40px 20px;\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\r\n        .register-page {\r\n            min-height: 80vh;\r\n            display: flex;\r\n            align-items: center;\r\n            justify-content: center;\r\n            padding: 40px 20px;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

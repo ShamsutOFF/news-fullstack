@@ -20,7 +20,7 @@ func NewPagesHandler(router fiber.Router) {
 		router: router,
 	}
 	// api := handler.router.Group("/api")
-	handler.router.Get("/", handler.home)
+	handler.router.Get("/home", handler.home)
 	handler.router.Get("/register", handler.register)
 	handler.router.Get("/error", handler.error)
 }

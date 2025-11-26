@@ -48,24 +48,27 @@ func RegisterForm() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = components.Input(components.InputProps{
+			Type:        "text",
 			Label:       "Имя",
-			Placeholder: "",
+			Placeholder: "Введите ваше имя",
 			Name:        "name",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = components.Input(components.InputProps{
+			Type:        "email",
 			Label:       "Email",
-			Placeholder: "",
+			Placeholder: "example@mail.com",
 			Name:        "email",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = components.Input(components.InputProps{
+			Type:        "password",
 			Label:       "Пароль",
-			Placeholder: "",
+			Placeholder: "Введите пароль",
 			Name:        "password",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -126,7 +129,7 @@ func RegisterFormStyle() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<style>\n        .register-form {\n            max-width: 480px;\n            width: 100%;\n            margin: 0 auto;\n            padding: 40px 20px;\n            background: var(--color-white);\n            border-radius: 12px;\n            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n        }\n\n        .form-fields {\n            display: flex;\n            flex-direction: column;\n            gap: 20px;\n            margin-bottom: 30px;\n        }\n\n        .form-button {\n            display: flex;\n            justify-content: center;\n        }\n\n        /* Стили для сообщений об ошибках */\n        .error-message {\n            color: var(--color-primary);\n            font-size: 14px;\n            margin-top: 5px;\n            display: none;\n        }\n\n        .htmx-request .submit-button {\n            opacity: 0.7;\n            cursor: not-allowed;\n        }\n\n        /* Показываем ошибки когда они есть */\n        [data-error] .error-message {\n            display: block;\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<style>\r\n        .register-form {\r\n            max-width: 480px;\r\n            width: 100%;\r\n            margin: 0 auto;\r\n            padding: 40px 20px;\r\n            background: var(--color-white);\r\n            border-radius: 12px;\r\n            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\r\n        }\r\n\r\n        .form-fields {\r\n            display: flex;\r\n            flex-direction: column;\r\n            gap: 20px;\r\n            margin-bottom: 30px;\r\n        }\r\n\r\n        .form-button {\r\n            display: flex;\r\n            justify-content: center;\r\n        }\r\n\r\n        /* Стили для сообщений об ошибках */\r\n        .error-message {\r\n            color: var(--color-primary);\r\n            font-size: 14px;\r\n            margin-top: 5px;\r\n            display: none;\r\n        }\r\n\r\n        .htmx-request .submit-button {\r\n            opacity: 0.7;\r\n            cursor: not-allowed;\r\n        }\r\n\r\n        /* Показываем ошибки когда они есть */\r\n        [data-error] .error-message {\r\n            display: block;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
