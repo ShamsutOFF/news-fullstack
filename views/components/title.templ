@@ -1,0 +1,17 @@
+package components
+
+templ Title(text string) {
+	<h2 class="section-title">{ text }</h2>
+}
+
+templ TitleStyle() {
+	<style>
+        .section-title {
+            font-size: 28px;
+            color: var(--color-text); /* цвет текста заголовка */
+            margin-bottom: 24px;
+            font-weight: bold;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }       
+    </style>
+}

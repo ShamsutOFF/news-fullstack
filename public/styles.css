@@ -1,7 +1,9 @@
 :root{
     --color-white: #FFFFFF;
-    --color-primary: #309689;
-    --color-primary-hover: #1c786b;
+    --color-black: #000000;
+    --color-primary: #FC4308;
+    --color-primary-hover: #ce3806;
+    --color-text:#3E3232;
 }
 html, body {
     height: 100%;

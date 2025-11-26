@@ -1,61 +1,44 @@
 package components
 
 templ Header() {
-    @HeaderStyle()
-    <header class="header">
-        <!-- Левая часть - навигация -->
-        <nav class="header-nav">
-            <a href="/news" class="nav-item nav-item--active">Новости</a>
-            <a href="/categories" class="nav-item nav-item--dropdown">
-                Категории
-                <span class="dropdown-arrow">▼</span>
-            </a>
-            <a href="/contacts" class="nav-item">Контакты</a>
-        </nav>
-
-        <!-- Центральная часть - пустое пространство -->
-        <div class="header-space"></div>
-
-        <!-- Правая часть - поиск и профиль -->
-        <div class="header-actions">
-            <!-- Поисковая строка -->
-            <div class="search-container">
-                <input
-                    type="text"
-                    placeholder="Найти Новость"
-                    class="search-input"
-                />
-                <span class="search-icon">🔍</span>
-            </div>
-
-            <!-- Профиль пользователя -->
-            <div class="profile-container">
-                <img
-                    src="/public/images/avatar.jpg"
-                    alt="Аватар"
-                    class="profile-avatar"
-                />
-                <span class="profile-name">Василий</span>
-                <span class="dropdown-arrow">▼</span>
-            </div>
-        </div>
-    </header>
+	@HeaderStyle()
+	<header class="header">
+		<!-- Левая часть - навигация -->
+		<nav class="header-nav">
+			<a href="/home" class="nav-item nav-item--active">Новости</a>
+			<a href="/categories" class="nav-item nav-item--dropdown">
+				Категории
+				<span class="dropdown-arrow">▼</span>
+			</a>
+			<a href="/contacts" class="nav-item">Контакты</a>
+		</nav>
+		<!-- Центральная часть - пустое пространство -->
+		<div class="header-space"></div>
+		<!-- Правая часть - для неавторизованных пользователей -->
+		<div class="header-actions">
+			<!-- Ссылки входа и регистрации -->
+			<div class="auth-links">
+				<a href="/login" class="auth-link">Вход</a>
+				<a href="/register" class="auth-link auth-link--primary">Регистрация</a>
+			</div>
+		</div>
+	</header>
 }
 
 templ HeaderStyle() {
- <style>
+	<style>
         .header {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Изменено с center на space-between */
+            justify-content: space-between;
             height: 70px;
-            background: #ffffff;
+            background: var(--color-white);
             padding: 0 20px;
             border-bottom: 1px solid #f0f0f0;
             font-family: Arial, sans-serif;
-            max-width: 1500px; /* Добавлено - такая же ширина как у контента */
-            margin: 0 auto; /* Центрируем */
-            width: 100%; /* Занимает всю доступную ширину */
+            max-width: 1500px;
+            margin: 0 auto;
+            width: 100%;
             box-sizing: border-box;
         }
 
@@ -64,16 +47,16 @@ templ HeaderStyle() {
             display: flex;
             align-items: center;
             gap: 40px;
-            flex-shrink: 0; /* Не сжимается */
+            flex-shrink: 0;
         }
 
         .nav-item {
             text-decoration: none;
-            color: #000000;
+            color: var(--color-black);
             font-size: 16px;
             font-weight: normal;
             transition: color 0.2s ease;
-            white-space: nowrap; /* Текст не переносится */
+            white-space: nowrap;
         }
 
         .nav-item:hover {
@@ -81,7 +64,7 @@ templ HeaderStyle() {
         }
 
         .nav-item--active {
-            color: #FF0000;
+            color: var(--color-primary);
             font-weight: bold;
             font-size: 20px;
         }
@@ -100,27 +83,61 @@ templ HeaderStyle() {
         /* Центральная часть - пустое пространство */
         .header-space {
             flex: 1;
-            min-width: 20px; /* Уменьшено */
+            min-width: 20px;
         }
 
-        /* Правая часть - поиск и профиль */
+        /* Правая часть - авторизация */
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 15px; /* Уменьшено */
-            flex-shrink: 0; /* Не сжимается */
+            gap: 15px;
+            flex-shrink: 0;
         }
 
-        /* Поисковая строка */
+        /* Ссылки входа и регистрации */
+        .auth-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .auth-link {
+            text-decoration: none;
+            color: var(--color-black);
+            font-size: 16px;
+            font-weight: normal;
+            transition: color 0.2s ease;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .auth-link:hover {
+            color: var(--color-primary);
+            background: #f9f9f9;
+        }
+
+        .auth-link--primary {
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-weight: 500;
+        }
+
+        .auth-link--primary:hover {
+            background: var(--color-primary-hover);
+            color: var(--color-white);
+        }
+
+        /* Стили для авторизованного состояния (пока скрыты) */
         .search-container {
             position: relative;
-            min-width: 200px; /* Уменьшено */
-            flex-shrink: 1; /* Может сжиматься */
+            min-width: 200px;
+            flex-shrink: 1;
+            display: none; /* Скрываем для неавторизованных */
         }
 
         .search-input {
             width: 100%;
-            padding: 8px 35px 8px 12px; /* Уменьшено */
+            padding: 8px 35px 8px 12px;
             border: none;
             border-radius: 8px;
             background: #f5f5f5;
@@ -147,16 +164,15 @@ templ HeaderStyle() {
             font-size: 12px;
         }
 
-        /* Профиль пользователя */
         .profile-container {
-            display: flex;
+            display: none; /* Скрываем для неавторизованных */
             align-items: center;
-            gap: 6px; /* Уменьшено */
-            padding: 4px 8px; /* Уменьшено */
+            gap: 6px;
+            padding: 4px 8px;
             border-radius: 20px;
             cursor: pointer;
             transition: background 0.2s ease;
-            flex-shrink: 0; /* Не сжимается */
+            flex-shrink: 0;
         }
 
         .profile-container:hover {
@@ -164,16 +180,16 @@ templ HeaderStyle() {
         }
 
         .profile-avatar {
-            width: 32px; /* Уменьшено */
-            height: 32px; /* Уменьшено */
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #f0f0f0;
         }
 
         .profile-name {
-            font-size: 13px; /* Уменьшено */
-            color: #000000;
+            font-size: 13px;
+            color: var(--color-black);
             font-weight: normal;
             white-space: nowrap;
         }
