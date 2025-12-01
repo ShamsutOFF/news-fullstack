@@ -1,7 +1,7 @@
 package users
 
 import (
-	"news-fullstack/internal/users/dto"
+	"fmt"
 	"news-fullstack/pkg/validator"
 
 	"github.com/gobuffalo/validate"
@@ -67,61 +67,46 @@ func (h *UsersHandler) register(c *fiber.Ctx) error {
 
 	if errors.HasAny() {
 		errorMessages := validator.FormatErrors(errors)
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error":   "Ошибка валидации",
-			"details": errorMessages,
-		})
+		return c.SendString(fmt.Sprintf("❌ Ошибка валидации: %s", errorMessages))
 	}
 
 	// Проверяем, существует ли пользователь
 	exists, err := h.usersRepo.UserExists(form.Email)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Внутренняя ошибка сервера",
-		})
+		return c.SendString("❌ Внутренняя ошибка сервера")
 	}
 	if exists {
-		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
-			"error": "Пользователь с таким email уже существует",
-		})
+		return c.SendString("❌ Пользователь с таким email уже существует")
 	}
 
 	// Хэшируем пароль
 	passwordHash, err := hashPassword(form.Password)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Ошибка при обработке пароля",
-		})
+		return c.SendString("❌ Ошибка при обработке пароля")
 	}
 
 	// Создаем пользователя в БД
 	err = h.usersRepo.CreateUser(form.Email, form.Name, passwordHash)
 	if err != nil {
 		if err == ErrUserExists {
-			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
-				"error": "Пользователь с таким email уже существует",
-			})
+			return c.SendString("❌ Пользователь с таким email уже существует")
 		}
-
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Не удалось создать пользователя",
-		})
+		return c.SendString("❌ Не удалось создать пользователя")
 	}
 
 	// По заданию: "При регистрации создавать пользователя и его пока его email просто возвращать в ответе"
-	response := dto.RegisterResponse{
-		Email: form.Email,
-		Name:  form.Name,
-	}
+	// Форматируем красивый ответ
+	response := fmt.Sprintf("✅ Регистрация успешна!\n\nEmail: %s\nИмя: %s", form.Email, form.Name)
 
 	// Если нужно также вернуть ID пользователя (опционально)
 	// Можно получить пользователя из БД, чтобы получить его ID
 	user, err := h.usersRepo.GetUserByEmail(form.Email)
 	if err == nil && user != nil {
-		response.ID = user.ID
+		response = fmt.Sprintf("✅ Регистрация успешна!\n\nEmail: %s\nИмя: %s\nID: %d",
+			form.Email, form.Name, user.ID)
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(response)
+	return c.SendString(response)
 }
 
 func (h *UsersHandler) login(c *fiber.Ctx) error {
@@ -146,10 +131,7 @@ func (h *UsersHandler) login(c *fiber.Ctx) error {
 
 	if errors.HasAny() {
 		errorMessages := validator.FormatErrors(errors)
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error":   "Ошибка валидации",
-			"details": errorMessages,
-		})
+		return c.SendString(fmt.Sprintf("❌ Ошибка валидации: %s", errorMessages))
 	}
 
 	// Получаем пользователя из БД
@@ -157,32 +139,21 @@ func (h *UsersHandler) login(c *fiber.Ctx) error {
 	if err != nil {
 		if err == ErrUserNotFound {
 			// Возвращаем общую ошибку для безопасности
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"error": "Неверный email или пароль",
-			})
+			return c.SendString("❌ Неверный email или пароль")
 		}
-
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Внутренняя ошибка сервера",
-		})
+		return c.SendString("❌ Внутренняя ошибка сервера")
 	}
 
 	// Проверяем пароль
 	if !checkPassword(form.Password, user.PasswordHash) {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"error": "Неверный email или пароль",
-		})
+		return c.SendString("❌ Неверный email или пароль")
 	}
 
 	// Вход успешен
-	return c.JSON(fiber.Map{
-		"message": "Вход выполнен успешно",
-		"user": fiber.Map{
-			"email": user.Email,
-			"name":  user.Name,
-			"id":    user.ID,
-		},
-	})
+	response := fmt.Sprintf("✅ Вход выполнен успешно!\n\nДобро пожаловать, %s!\nEmail: %s",
+		user.Name, user.Email)
+
+	return c.SendString(response)
 }
 
 // Вспомогательные функции для работы с паролями
