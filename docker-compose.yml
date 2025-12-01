@@ -1,0 +1,22 @@
+services:
+  postgres:
+    container_name: postgres_news  # Уникальное имя
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: news_fullstack
+      PGDATA: /data/postgres
+    volumes:
+      - postgres_news_data:/data/postgres  # Уникальный volume
+    ports:
+      - "5433:5432"  # Другой порт
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d news_fullstack"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_news_data:

@@ -4,8 +4,9 @@ import (
 	"log"
 	"log/slog"
 	"news-fullstack/config"
-	"news-fullstack/internal/api"
 	"news-fullstack/internal/pages"
+	"news-fullstack/internal/users"
+	"news-fullstack/pkg/database"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -15,6 +16,7 @@ import (
 
 func main() {
 	config.Init()
+	dbConfig := config.NewDatabaseConfig()
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
@@ -25,8 +27,12 @@ func main() {
 	app.Use(recover.New())
 	app.Static("/public", "./public")
 
-	pages.NewPagesHandler(app)
-	api.NewApiHandler(app)
+	dbpool := database.CreateDbPool(dbConfig, logger)
+	defer dbpool.Close()
+
+	usersRepo := users.NewUsersRepository(dbpool, logger)
+	pages.NewPagesHandler(app, usersRepo)
+	users.NewUsersHandler(app, usersRepo)
 
 	slog.Info("starting server", "port", 3000)
 	log.Fatal(app.Listen(":3000"))

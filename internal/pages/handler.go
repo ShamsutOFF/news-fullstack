@@ -3,6 +3,7 @@ package pages
 import (
 	"log"
 
+	"news-fullstack/internal/users"
 	"news-fullstack/pkg/tadapter"
 	"news-fullstack/views"
 	"news-fullstack/views/pages"
@@ -12,17 +13,27 @@ import (
 )
 
 type PagesHandler struct {
-	router fiber.Router
+	router    fiber.Router
+	usersRepo *users.UsersRepository
 }
 
-func NewPagesHandler(router fiber.Router) {
+func NewPagesHandler(router fiber.Router, usersRepo *users.UsersRepository) {
 	handler := &PagesHandler{
-		router: router,
+		router:    router,
+		usersRepo: usersRepo,
 	}
-	// api := handler.router.Group("/api")
-	handler.router.Get("/home", handler.home)
+
+	// Главная страница доступна по двум URL
+	handler.router.Get("/", handler.home)     // Основной URL
+	handler.router.Get("/home", handler.home) // Дополнительный URL
+
+	// Регистрация и другие страницы
 	handler.router.Get("/register", handler.register)
+	//	handler.router.Get("/login", handler.login)     // Добавьте логин, если нужно
 	handler.router.Get("/error", handler.error)
+
+	// Страница статьи (пример)
+	//	handler.router.Get("/article/:id", handler.article)
 }
 
 func (h *PagesHandler) home(c *fiber.Ctx) error {

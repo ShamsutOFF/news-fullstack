@@ -1,4 +1,4 @@
-package api
+package users
 
 type RegisterForm struct {
 	Email    string
