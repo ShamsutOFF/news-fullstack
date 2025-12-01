@@ -47,7 +47,7 @@ func Input(props InputProps) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 13, Col: 30}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 13, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -60,7 +60,7 @@ func Input(props InputProps) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.Label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 13, Col: 44}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 13, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -73,7 +73,7 @@ func Input(props InputProps) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(props.Type)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 15, Col: 29}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 15, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -86,7 +86,7 @@ func Input(props InputProps) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 16, Col: 26}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 16, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -99,7 +99,7 @@ func Input(props InputProps) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(props.Placeholder)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 17, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 17, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -112,7 +112,7 @@ func Input(props InputProps) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(props.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 18, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 18, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -147,7 +147,7 @@ func InputStyle() templ.Component {
 			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<style>\r\n        .input-wrapper {\r\n            margin-bottom: 16px;\r\n        }\r\n        label {\r\n            display: block;\r\n            margin-bottom: 8px;\r\n            margin-left: 16px;\r\n            font-weight: 500;\r\n            color: var(--color-text);\r\n            font-size: 14px;\r\n        }\r\n        .input {\r\n            height: 48px;\r\n            width: 100%;\r\n            padding: 20px;\r\n            background: #F5F5F5;\r\n            border-radius: 12px;\r\n            border: none;\r\n            box-sizing: border-box;\r\n        }\r\n        .input::placeholder {\r\n            color: var(--color-gray);\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<style>\r\n        .input-wrapper {\r\n            margin-bottom: 16px;\r\n        }\r\n        label {\r\n            display: block;\r\n            margin-bottom: 8px;\r\n            margin-left: 16px;\r\n            font-weight: 500;\r\n            color: var(--color-text);\r\n            font-size: 14px;\r\n        }\r\n        .input {\r\n            height: 48px;\r\n            width: 100%;\r\n            padding: 20px;\r\n            background: #F5F5F5;\r\n            border-radius: 12px;\r\n            border: none;\r\n            box-sizing: border-box;\r\n        }\r\n        .input:placeholder {\r\n            color: var(--color-gray);\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -1,28 +1,28 @@
 package components
 
 type InputProps struct {
-    Type        string
-    Label       string
-    Placeholder string
-    Name        string
+	Type        string
+	Label       string
+	Placeholder string
+	Name        string
 }
 
 templ Input(props InputProps) {
-    @InputStyle()
-    <div class="input-wrapper">
-        <label for={props.Name}>{props.Label}</label>
-        <input
-            type={ props.Type }
-            id={props.Name}
-            placeholder={props.Placeholder}
-            name={props.Name}
-            class="input"
-        />
-    </div>
+	@InputStyle()
+	<div class="input-wrapper">
+		<label for={ props.Name }>{ props.Label }</label>
+		<input
+			type={ props.Type }
+			id={ props.Name }
+			placeholder={ props.Placeholder }
+			name={ props.Name }
+			class="input"
+		/>
+	</div>
 }
 
 templ InputStyle() {
-    <style>
+	<style>
         .input-wrapper {
             margin-bottom: 16px;
         }
@@ -43,7 +43,7 @@ templ InputStyle() {
             border: none;
             box-sizing: border-box;
         }
-        .input::placeholder {
+        .input:placeholder {
             color: var(--color-gray);
         }
     </style>

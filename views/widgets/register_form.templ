@@ -8,32 +8,30 @@ templ RegisterForm() {
 		<div id="register-result"></div>
 		@components.Title("Регистрация на сайте")
 		<form
-			hx-post="/api/register"
+			hx-post="/users/register"
 			hx-trigger="submit"
 			hx-target="#register-result"
 			hx-swap="innerHTML"
 		>
 			<div class="form-fields">
-			@components.Input(components.InputProps{
-                Type:        "text",
-                Label:       "Имя",
-                Placeholder: "Введите ваше имя",
-                Name:        "name",
-            })
-
-            @components.Input(components.InputProps{
-                Type:        "email",
-                Label:       "Email",
-                Placeholder: "example@mail.com",
-                Name:        "email",
-            })
-
-            @components.Input(components.InputProps{
-                Type:        "password",
-                Label:       "Пароль",
-                Placeholder: "Введите пароль",
-                Name:        "password",
-            })
+				@components.Input(components.InputProps{
+					Type:        "text",
+					Label:       "Имя",
+					Placeholder: "Введите ваше имя",
+					Name:        "name",
+				})
+				@components.Input(components.InputProps{
+					Type:        "email",
+					Label:       "Email",
+					Placeholder: "example@mail.com",
+					Name:        "email",
+				})
+				@components.Input(components.InputProps{
+					Type:        "password",
+					Label:       "Пароль",
+					Placeholder: "Введите пароль",
+					Name:        "password",
+				})
 			</div>
 			<div class="form-button">
 				@components.SubmitButton() {

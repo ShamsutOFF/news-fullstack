@@ -4,6 +4,7 @@
     --color-primary: #FC4308;
     --color-primary-hover: #ce3806;
     --color-text:#3E3232;
+    --color-gray:#5a5a5a;
 }
 html, body {
     height: 100%;
