@@ -2,11 +2,13 @@ package users
 
 import (
 	"fmt"
+	"log"
 	"news-fullstack/pkg/validator"
 
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -23,6 +25,7 @@ func NewUsersHandler(router fiber.Router, usersRepo *UsersRepository) {
 	api := handler.router.Group("/users")
 	api.Post("/register", handler.register)
 	api.Post("/login", handler.login)
+	api.Get("/logout", handler.logout)
 }
 
 func (h *UsersHandler) register(c *fiber.Ctx) error {
@@ -149,11 +152,40 @@ func (h *UsersHandler) login(c *fiber.Ctx) error {
 		return c.SendString("❌ Неверный email или пароль")
 	}
 
-	// Вход успешен
-	response := fmt.Sprintf("✅ Вход выполнен успешно!\n\nДобро пожаловать, %s!\nEmail: %s",
-		user.Name, user.Email)
+	// Создаем сессию
+	sessionStore := c.Locals("session_store").(*session.Store)
+	sess, err := sessionStore.Get(c)
+	if err != nil {
+		log.Printf("Ошибка получения сессии: %v", err)
+		return c.Status(500).SendString("❌ Ошибка создания сессии")
+	}
 
-	return c.SendString(response)
+	// Сохраняем данные пользователя в сессии
+	sess.Set("email", user.Email)
+	sess.Set("user_id", user.ID)
+	sess.Set("name", user.Name)
+
+	// Сохраняем сессию
+	if err := sess.Save(); err != nil {
+		log.Printf("Ошибка сохранения сессии: %v", err)
+		return c.Status(500).SendString("❌ Ошибка сохранения сессии")
+	}
+
+	// Редирект на страницу успеха
+	return c.Redirect(fmt.Sprintf("/login-success?name=%s", user.Name))
+}
+
+// Добавим метод для выхода
+func (h *UsersHandler) logout(c *fiber.Ctx) error {
+	if storeInterface := c.Locals("session_store"); storeInterface != nil {
+		if store, ok := storeInterface.(*session.Store); ok {
+			sess, err := store.Get(c)
+			if err == nil {
+				sess.Destroy()
+			}
+		}
+	}
+	return c.Redirect("/")
 }
 
 // Вспомогательные функции для работы с паролями

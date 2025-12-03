@@ -1,0 +1,30 @@
+package pages
+
+import "news-fullstack/views/components"
+
+templ LoginSuccessPage(name string) {
+	<!DOCTYPE html>
+	<html lang="ru">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Вход выполнен</title>
+			<link rel="stylesheet" href="/public/css/styles.css"/>
+		</head>
+		<body>
+			@components.Header()
+			<main class="container">
+				<div class="success-message">
+					<h1>✅ Вход выполнен успешно!</h1>
+					<p>Добро пожаловать, { name }!</p>
+					<p>Вы будете перенаправлены на главную страницу через 3 секунды...</p>
+				</div>
+			</main>
+			<script>
+            setTimeout(function() {
+                window.location.href = "/";
+            }, 3000);
+        </script>
+		</body>
+	</html>
+}
