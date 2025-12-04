@@ -1,0 +1,87 @@
+package pages
+
+import "news-fullstack/views/layout"
+import "context"
+
+templ ProfilePage() {
+	@layout.Layout(layout.LayoutProps{
+		Title:           "Профиль - Новостной портал",
+		MetaDescription: "Ваш профиль на новостном портале",
+	}) {
+		@ProfilePageStyle()
+		<div class="profile-page">
+			<div class="profile-container">
+				<h1>Ваш профиль</h1>
+				<div class="profile-info">
+					<p>Email: { getUserEmail(ctx) }</p>
+					<a href="/logout" class="logout-button">Выйти</a>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+templ ProfilePageStyle() {
+	<style>
+        .profile-page {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            width: 100%;
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-container h1 {
+            margin-bottom: 30px;
+            color: var(--color-dark);
+            text-align: center;
+        }
+
+        .profile-info {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .profile-info p {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .logout-button {
+            display: inline-block;
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+}
+
+// Функция для получения email из контекста
+func getUserEmail(ctx context.Context) string {
+	// Получаем email из контекста Fiber
+	if email, ok := ctx.Value("user_email").(string); ok {
+		return email
+	}
+	return "Не авторизован"
+}

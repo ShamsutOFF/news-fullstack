@@ -1,0 +1,30 @@
+package pages
+
+import (
+	"news-fullstack/views/layout"
+	"news-fullstack/views/widgets"
+)
+
+templ LoginPage() {
+	@layout.Layout(layout.LayoutProps{
+		Title:           "Вход - Новостной портал",
+		MetaDescription: "Войдите в свой аккаунт на новостном портале",
+	}) {
+		@LoginPageStyle()
+		<div class="login-page">
+			@widgets.LoginForm()
+		</div>
+	}
+}
+
+templ LoginPageStyle() {
+	<style>
+        .login-page {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+    </style>
+}

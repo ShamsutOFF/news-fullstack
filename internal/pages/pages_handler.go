@@ -1,8 +1,6 @@
 package pages
 
 import (
-	"log"
-
 	"news-fullstack/internal/users"
 	"news-fullstack/pkg/tadapter"
 	"news-fullstack/views"
@@ -29,7 +27,10 @@ func NewPagesHandler(router fiber.Router, usersRepo *users.UsersRepository) {
 
 	// Регистрация и другие страницы
 	handler.router.Get("/register", handler.register)
-	//	handler.router.Get("/login", handler.login)     // Добавьте логин, если нужно
+	handler.router.Get("/login", handler.login)
+	handler.router.Get("/login-success", handler.loginSuccess)
+	handler.router.Get("/profile", handler.profile)
+
 	handler.router.Get("/error", handler.error)
 
 	// Страница статьи (пример)
@@ -37,6 +38,7 @@ func NewPagesHandler(router fiber.Router, usersRepo *users.UsersRepository) {
 }
 
 func (h *PagesHandler) home(c *fiber.Ctx) error {
+
 	categories := []types.Category{
 		{Name: "Еда", ImageURL: "/public/images/food_img.jpg"},
 		{Name: "Животные", ImageURL: "/public/images/animal_img.jpg"},
@@ -92,14 +94,30 @@ func (h *PagesHandler) home(c *fiber.Ctx) error {
 			PublishDate:  "Август 12, 2025",
 		},
 	}
-
 	component := views.HomePage(categories, banners, articles)
 	return tadapter.Render(c, component)
 }
 
 func (h *PagesHandler) register(c *fiber.Ctx) error {
-	log.Println("@@@ register")
 	component := pages.RegisterPage()
+	return tadapter.Render(c, component)
+}
+
+// Добавим метод для страницы логина
+func (h *PagesHandler) login(c *fiber.Ctx) error {
+	component := pages.LoginPage()
+	return tadapter.Render(c, component)
+}
+
+// Добавим метод для профиля
+func (h *PagesHandler) profile(c *fiber.Ctx) error {
+	component := pages.ProfilePage()
+	return tadapter.Render(c, component)
+}
+
+func (h *PagesHandler) loginSuccess(c *fiber.Ctx) error {
+	name := c.Query("name", "")
+	component := pages.LoginSuccessPage(name)
 	return tadapter.Render(c, component)
 }
 

@@ -1,5 +1,7 @@
 package components
 
+import "context"
+
 templ Header() {
 	@HeaderStyle()
 	<header class="header">
@@ -16,13 +18,28 @@ templ Header() {
 		<div class="header-space"></div>
 		<!-- Правая часть - для неавторизованных пользователей -->
 		<div class="header-actions">
-			<!-- Ссылки входа и регистрации -->
-			<div class="auth-links">
-				<a href="/login" class="auth-link">Вход</a>
-				<a href="/register" class="auth-link auth-link--primary">Регистрация</a>
-			</div>
+			// Показываем приветствие если пользователь авторизован
+			{{ email := getUserEmail(ctx) }}
+			if email != "" {
+				<a class="profile" href="/users/logout">{ email } </a>
+			} else {
+				<!-- Ссылки входа и регистрации -->
+				<div class="auth-links">
+					<a href="/login" class="auth-link">Вход</a>
+					<a href="/register" class="auth-link auth-link--primary">Регистрация</a>
+				</div>
+			}
 		</div>
 	</header>
+}
+
+// Функция для получения email из контекста
+func getUserEmail(ctx context.Context) string {
+	// Получаем email из контекста Fiber
+	if email, ok := ctx.Value("user_email").(string); ok {
+		return email
+	}
+	return ""
 }
 
 templ HeaderStyle() {
@@ -40,6 +57,13 @@ templ HeaderStyle() {
             margin: 0 auto;
             width: 100%;
             box-sizing: border-box;
+        }
+
+        .profile {
+            background: #e8f5e8; 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border-radius: 5px;"
         }
 
         /* Левая часть - навигация */

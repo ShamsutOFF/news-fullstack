@@ -2,11 +2,13 @@ package users
 
 import (
 	"fmt"
+	"log"
 	"news-fullstack/pkg/validator"
 
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -23,6 +25,7 @@ func NewUsersHandler(router fiber.Router, usersRepo *UsersRepository) {
 	api := handler.router.Group("/users")
 	api.Post("/register", handler.register)
 	api.Post("/login", handler.login)
+	api.Get("/logout", handler.logout)
 }
 
 func (h *UsersHandler) register(c *fiber.Ctx) error {
@@ -94,17 +97,34 @@ func (h *UsersHandler) register(c *fiber.Ctx) error {
 		return c.SendString("❌ Не удалось создать пользователя")
 	}
 
-	// По заданию: "При регистрации создавать пользователя и его пока его email просто возвращать в ответе"
-	// Форматируем красивый ответ
-	response := fmt.Sprintf("✅ Регистрация успешна!\n\nEmail: %s\nИмя: %s", form.Email, form.Name)
-
-	// Если нужно также вернуть ID пользователя (опционально)
-	// Можно получить пользователя из БД, чтобы получить его ID
+	// Получаем созданного пользователя для получения ID
 	user, err := h.usersRepo.GetUserByEmail(form.Email)
-	if err == nil && user != nil {
-		response = fmt.Sprintf("✅ Регистрация успешна!\n\nEmail: %s\nИмя: %s\nID: %d",
-			form.Email, form.Name, user.ID)
+	if err != nil {
+		return c.SendString("❌ Пользователь создан, но не найден")
 	}
+
+	// СОЗДАЕМ СЕССИЮ ПОСЛЕ УСПЕШНОЙ РЕГИСТРАЦИИ
+	sessionStore := c.Locals("session_store").(*session.Store)
+	sess, err := sessionStore.Get(c)
+	if err != nil {
+		log.Printf("Ошибка получения сессии: %v", err)
+		return c.SendString("✅ Пользователь создан, но ошибка создания сессии")
+	}
+
+	// Сохраняем данные пользователя в сессии
+	sess.Set("email", user.Email)
+	sess.Set("user_id", user.ID)
+	sess.Set("name", user.Name)
+
+	// Сохраняем сессию
+	if err := sess.Save(); err != nil {
+		log.Printf("Ошибка сохранения сессии: %v", err)
+		return c.SendString("✅ Пользователь создан, но ошибка сохранения сессии")
+	}
+
+	// Форматируем красивый ответ
+	response := fmt.Sprintf("✅ Регистрация успешна! Вы автоматически вошли в систему.\n\nEmail: %s\nИмя: %s\nID: %d",
+		form.Email, form.Name, user.ID)
 
 	return c.SendString(response)
 }
@@ -149,11 +169,40 @@ func (h *UsersHandler) login(c *fiber.Ctx) error {
 		return c.SendString("❌ Неверный email или пароль")
 	}
 
-	// Вход успешен
-	response := fmt.Sprintf("✅ Вход выполнен успешно!\n\nДобро пожаловать, %s!\nEmail: %s",
-		user.Name, user.Email)
+	// Создаем сессию
+	sessionStore := c.Locals("session_store").(*session.Store)
+	sess, err := sessionStore.Get(c)
+	if err != nil {
+		log.Printf("Ошибка получения сессии: %v", err)
+		return c.Status(500).SendString("❌ Ошибка создания сессии")
+	}
 
-	return c.SendString(response)
+	// Сохраняем данные пользователя в сессии
+	sess.Set("email", user.Email)
+	sess.Set("user_id", user.ID)
+	sess.Set("name", user.Name)
+
+	// Сохраняем сессию
+	if err := sess.Save(); err != nil {
+		log.Printf("Ошибка сохранения сессии: %v", err)
+		return c.Status(500).SendString("❌ Ошибка сохранения сессии")
+	}
+
+	// Редирект на страницу успеха
+	return c.Redirect(fmt.Sprintf("/login-success?name=%s", user.Name))
+}
+
+// Добавим метод для выхода
+func (h *UsersHandler) logout(c *fiber.Ctx) error {
+	if storeInterface := c.Locals("session_store"); storeInterface != nil {
+		if store, ok := storeInterface.(*session.Store); ok {
+			sess, err := store.Get(c)
+			if err == nil {
+				sess.Destroy()
+			}
+		}
+	}
+	return c.Redirect("/")
 }
 
 // Вспомогательные функции для работы с паролями

@@ -8,6 +8,8 @@ package components
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "context"
+
 func Header() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -33,12 +35,50 @@ func Header() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<header class=\"header\"><!-- Левая часть - навигация --><nav class=\"header-nav\"><a href=\"/home\" class=\"nav-item nav-item--active\">Новости</a> <a href=\"/categories\" class=\"nav-item nav-item--dropdown\">Категории <span class=\"dropdown-arrow\">▼</span></a> <a href=\"/contacts\" class=\"nav-item\">Контакты</a></nav><!-- Центральная часть - пустое пространство --><div class=\"header-space\"></div><!-- Правая часть - для неавторизованных пользователей --><div class=\"header-actions\"><!-- Ссылки входа и регистрации --><div class=\"auth-links\"><a href=\"/login\" class=\"auth-link\">Вход</a> <a href=\"/register\" class=\"auth-link auth-link--primary\">Регистрация</a></div></div></header>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<header class=\"header\"><!-- Левая часть - навигация --><nav class=\"header-nav\"><a href=\"/home\" class=\"nav-item nav-item--active\">Новости</a> <a href=\"/categories\" class=\"nav-item nav-item--dropdown\">Категории <span class=\"dropdown-arrow\">▼</span></a> <a href=\"/contacts\" class=\"nav-item\">Контакты</a></nav><!-- Центральная часть - пустое пространство --><div class=\"header-space\"></div><!-- Правая часть - для неавторизованных пользователей --><div class=\"header-actions\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		email := getUserEmail(ctx)
+		if email != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<a class=\"profile\" href=\"/users/logout\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var2 string
+			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(email)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/header.templ`, Line: 24, Col: 51}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</a>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<!-- Ссылки входа и регистрации --> <div class=\"auth-links\"><a href=\"/login\" class=\"auth-link\">Вход</a> <a href=\"/register\" class=\"auth-link auth-link--primary\">Регистрация</a></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		return nil
 	})
+}
+
+// Функция для получения email из контекста
+func getUserEmail(ctx context.Context) string {
+	// Получаем email из контекста Fiber
+	if email, ok := ctx.Value("user_email").(string); ok {
+		return email
+	}
+	return ""
 }
 
 func HeaderStyle() templ.Component {
@@ -57,12 +97,12 @@ func HeaderStyle() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var2 == nil {
-			templ_7745c5c3_Var2 = templ.NopComponent
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\r\n        .header {\r\n            display: flex;\r\n            align-items: center;\r\n            justify-content: space-between;\r\n            height: 70px;\r\n            background: var(--color-white);\r\n            padding: 0 20px;\r\n            border-bottom: 1px solid #f0f0f0;\r\n            font-family: Arial, sans-serif;\r\n            max-width: 1500px;\r\n            margin: 0 auto;\r\n            width: 100%;\r\n            box-sizing: border-box;\r\n        }\r\n\r\n        /* Левая часть - навигация */\r\n        .header-nav {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 40px;\r\n            flex-shrink: 0;\r\n        }\r\n\r\n        .nav-item {\r\n            text-decoration: none;\r\n            color: var(--color-black);\r\n            font-size: 16px;\r\n            font-weight: normal;\r\n            transition: color 0.2s ease;\r\n            white-space: nowrap;\r\n        }\r\n\r\n        .nav-item:hover {\r\n            color: #666666;\r\n        }\r\n\r\n        .nav-item--active {\r\n            color: var(--color-primary);\r\n            font-weight: bold;\r\n            font-size: 20px;\r\n        }\r\n\r\n        .nav-item--dropdown {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 5px;\r\n        }\r\n\r\n        .dropdown-arrow {\r\n            font-size: 12px;\r\n            color: #666666;\r\n        }\r\n\r\n        /* Центральная часть - пустое пространство */\r\n        .header-space {\r\n            flex: 1;\r\n            min-width: 20px;\r\n        }\r\n\r\n        /* Правая часть - авторизация */\r\n        .header-actions {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 15px;\r\n            flex-shrink: 0;\r\n        }\r\n\r\n        /* Ссылки входа и регистрации */\r\n        .auth-links {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 20px;\r\n        }\r\n\r\n        .auth-link {\r\n            text-decoration: none;\r\n            color: var(--color-black);\r\n            font-size: 16px;\r\n            font-weight: normal;\r\n            transition: color 0.2s ease;\r\n            padding: 8px 16px;\r\n            border-radius: 6px;\r\n        }\r\n\r\n        .auth-link:hover {\r\n            color: var(--color-primary);\r\n            background: #f9f9f9;\r\n        }\r\n\r\n        .auth-link--primary {\r\n            background: var(--color-primary);\r\n            color: var(--color-white);\r\n            font-weight: 500;\r\n        }\r\n\r\n        .auth-link--primary:hover {\r\n            background: var(--color-primary-hover);\r\n            color: var(--color-white);\r\n        }\r\n\r\n        /* Стили для авторизованного состояния (пока скрыты) */\r\n        .search-container {\r\n            position: relative;\r\n            min-width: 200px;\r\n            flex-shrink: 1;\r\n            display: none; /* Скрываем для неавторизованных */\r\n        }\r\n\r\n        .search-input {\r\n            width: 100%;\r\n            padding: 8px 35px 8px 12px;\r\n            border: none;\r\n            border-radius: 8px;\r\n            background: #f5f5f5;\r\n            font-size: 14px;\r\n            outline: none;\r\n            transition: background 0.2s ease;\r\n            box-sizing: border-box;\r\n        }\r\n\r\n        .search-input:focus {\r\n            background: #eeeeee;\r\n        }\r\n\r\n        .search-input::placeholder {\r\n            color: #999999;\r\n        }\r\n\r\n        .search-icon {\r\n            position: absolute;\r\n            right: 10px;\r\n            top: 50%;\r\n            transform: translateY(-50%);\r\n            color: #666666;\r\n            font-size: 12px;\r\n        }\r\n\r\n        .profile-container {\r\n            display: none; /* Скрываем для неавторизованных */\r\n            align-items: center;\r\n            gap: 6px;\r\n            padding: 4px 8px;\r\n            border-radius: 20px;\r\n            cursor: pointer;\r\n            transition: background 0.2s ease;\r\n            flex-shrink: 0;\r\n        }\r\n\r\n        .profile-container:hover {\r\n            background: #f9f9f9;\r\n        }\r\n\r\n        .profile-avatar {\r\n            width: 32px;\r\n            height: 32px;\r\n            border-radius: 50%;\r\n            object-fit: cover;\r\n            border: 2px solid #f0f0f0;\r\n        }\r\n\r\n        .profile-name {\r\n            font-size: 13px;\r\n            color: var(--color-black);\r\n            font-weight: normal;\r\n            white-space: nowrap;\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<style>\r\n        .header {\r\n            display: flex;\r\n            align-items: center;\r\n            justify-content: space-between;\r\n            height: 70px;\r\n            background: var(--color-white);\r\n            padding: 0 20px;\r\n            border-bottom: 1px solid #f0f0f0;\r\n            font-family: Arial, sans-serif;\r\n            max-width: 1500px;\r\n            margin: 0 auto;\r\n            width: 100%;\r\n            box-sizing: border-box;\r\n        }\r\n\r\n        .profile {\r\n            background: #e8f5e8; \r\n            padding: 10px; \r\n            margin-bottom: 20px; \r\n            border-radius: 5px;\"\r\n        }\r\n\r\n        /* Левая часть - навигация */\r\n        .header-nav {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 40px;\r\n            flex-shrink: 0;\r\n        }\r\n\r\n        .nav-item {\r\n            text-decoration: none;\r\n            color: var(--color-black);\r\n            font-size: 16px;\r\n            font-weight: normal;\r\n            transition: color 0.2s ease;\r\n            white-space: nowrap;\r\n        }\r\n\r\n        .nav-item:hover {\r\n            color: #666666;\r\n        }\r\n\r\n        .nav-item--active {\r\n            color: var(--color-primary);\r\n            font-weight: bold;\r\n            font-size: 20px;\r\n        }\r\n\r\n        .nav-item--dropdown {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 5px;\r\n        }\r\n\r\n        .dropdown-arrow {\r\n            font-size: 12px;\r\n            color: #666666;\r\n        }\r\n\r\n        /* Центральная часть - пустое пространство */\r\n        .header-space {\r\n            flex: 1;\r\n            min-width: 20px;\r\n        }\r\n\r\n        /* Правая часть - авторизация */\r\n        .header-actions {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 15px;\r\n            flex-shrink: 0;\r\n        }\r\n\r\n        /* Ссылки входа и регистрации */\r\n        .auth-links {\r\n            display: flex;\r\n            align-items: center;\r\n            gap: 20px;\r\n        }\r\n\r\n        .auth-link {\r\n            text-decoration: none;\r\n            color: var(--color-black);\r\n            font-size: 16px;\r\n            font-weight: normal;\r\n            transition: color 0.2s ease;\r\n            padding: 8px 16px;\r\n            border-radius: 6px;\r\n        }\r\n\r\n        .auth-link:hover {\r\n            color: var(--color-primary);\r\n            background: #f9f9f9;\r\n        }\r\n\r\n        .auth-link--primary {\r\n            background: var(--color-primary);\r\n            color: var(--color-white);\r\n            font-weight: 500;\r\n        }\r\n\r\n        .auth-link--primary:hover {\r\n            background: var(--color-primary-hover);\r\n            color: var(--color-white);\r\n        }\r\n\r\n        /* Стили для авторизованного состояния (пока скрыты) */\r\n        .search-container {\r\n            position: relative;\r\n            min-width: 200px;\r\n            flex-shrink: 1;\r\n            display: none; /* Скрываем для неавторизованных */\r\n        }\r\n\r\n        .search-input {\r\n            width: 100%;\r\n            padding: 8px 35px 8px 12px;\r\n            border: none;\r\n            border-radius: 8px;\r\n            background: #f5f5f5;\r\n            font-size: 14px;\r\n            outline: none;\r\n            transition: background 0.2s ease;\r\n            box-sizing: border-box;\r\n        }\r\n\r\n        .search-input:focus {\r\n            background: #eeeeee;\r\n        }\r\n\r\n        .search-input::placeholder {\r\n            color: #999999;\r\n        }\r\n\r\n        .search-icon {\r\n            position: absolute;\r\n            right: 10px;\r\n            top: 50%;\r\n            transform: translateY(-50%);\r\n            color: #666666;\r\n            font-size: 12px;\r\n        }\r\n\r\n        .profile-container {\r\n            display: none; /* Скрываем для неавторизованных */\r\n            align-items: center;\r\n            gap: 6px;\r\n            padding: 4px 8px;\r\n            border-radius: 20px;\r\n            cursor: pointer;\r\n            transition: background 0.2s ease;\r\n            flex-shrink: 0;\r\n        }\r\n\r\n        .profile-container:hover {\r\n            background: #f9f9f9;\r\n        }\r\n\r\n        .profile-avatar {\r\n            width: 32px;\r\n            height: 32px;\r\n            border-radius: 50%;\r\n            object-fit: cover;\r\n            border: 2px solid #f0f0f0;\r\n        }\r\n\r\n        .profile-name {\r\n            font-size: 13px;\r\n            color: var(--color-black);\r\n            font-weight: normal;\r\n            white-space: nowrap;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
