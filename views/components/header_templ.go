@@ -41,7 +41,7 @@ func Header() templ.Component {
 		}
 		email := getUserEmail(ctx)
 		if email != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"profile\">Привет, ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"profile\" href=\"/users/logout\">Привет, ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

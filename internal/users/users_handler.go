@@ -97,17 +97,34 @@ func (h *UsersHandler) register(c *fiber.Ctx) error {
 		return c.SendString("❌ Не удалось создать пользователя")
 	}
 
-	// По заданию: "При регистрации создавать пользователя и его пока его email просто возвращать в ответе"
-	// Форматируем красивый ответ
-	response := fmt.Sprintf("✅ Регистрация успешна!\n\nEmail: %s\nИмя: %s", form.Email, form.Name)
-
-	// Если нужно также вернуть ID пользователя (опционально)
-	// Можно получить пользователя из БД, чтобы получить его ID
+	// Получаем созданного пользователя для получения ID
 	user, err := h.usersRepo.GetUserByEmail(form.Email)
-	if err == nil && user != nil {
-		response = fmt.Sprintf("✅ Регистрация успешна!\n\nEmail: %s\nИмя: %s\nID: %d",
-			form.Email, form.Name, user.ID)
+	if err != nil {
+		return c.SendString("❌ Пользователь создан, но не найден")
 	}
+
+	// СОЗДАЕМ СЕССИЮ ПОСЛЕ УСПЕШНОЙ РЕГИСТРАЦИИ
+	sessionStore := c.Locals("session_store").(*session.Store)
+	sess, err := sessionStore.Get(c)
+	if err != nil {
+		log.Printf("Ошибка получения сессии: %v", err)
+		return c.SendString("✅ Пользователь создан, но ошибка создания сессии")
+	}
+
+	// Сохраняем данные пользователя в сессии
+	sess.Set("email", user.Email)
+	sess.Set("user_id", user.ID)
+	sess.Set("name", user.Name)
+
+	// Сохраняем сессию
+	if err := sess.Save(); err != nil {
+		log.Printf("Ошибка сохранения сессии: %v", err)
+		return c.SendString("✅ Пользователь создан, но ошибка сохранения сессии")
+	}
+
+	// Форматируем красивый ответ
+	response := fmt.Sprintf("✅ Регистрация успешна! Вы автоматически вошли в систему.\n\nEmail: %s\nИмя: %s\nID: %d",
+		form.Email, form.Name, user.ID)
 
 	return c.SendString(response)
 }

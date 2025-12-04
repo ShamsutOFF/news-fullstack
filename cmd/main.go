@@ -37,7 +37,7 @@ func main() {
 	// Инициализация хранилища сессий
 	sessionStore := session.NewSessionStore(dbpool)
 	// Добавляем middleware для проверки сессий
-	app.Use(auth.SessionMiddleware(sessionStore))
+	app.Use(auth.SessionMiddleware(sessionStore, logger))
 
 	// Репозитории
 	usersRepo := users.NewUsersRepository(dbpool, logger)

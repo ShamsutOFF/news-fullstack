@@ -21,7 +21,7 @@ templ Header() {
 			// Показываем приветствие если пользователь авторизован
 			{{ email := getUserEmail(ctx) }}
 			if email != "" {
-				<div class="profile">
+				<div class="profile" href="/users/logout">
 					Привет, { email }! | <a href="/users/logout">Выйти</a>
 				</div>
 			} else {
