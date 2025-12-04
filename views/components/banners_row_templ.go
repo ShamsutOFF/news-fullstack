@@ -45,6 +45,10 @@ func BannersRow(banners []types.BannerCard) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
+		templ_7745c5c3_Err = Swiper(banners).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -74,7 +78,87 @@ func BannersRowStyle() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\r\n        .banners-container {\r\n            width: 100%; /* Растягивание на всю ширину */\r\n            border-radius: 12px; /* Закругление как у кнопок */\r\n            padding: 20px; /* Увеличим padding для лучшего визуала */\r\n            margin: 20px 0;\r\n            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Лёгкая тень для глубины */\r\n            box-sizing: border-box;\r\n        }\r\n\r\n        .banners-row {\r\n            display: flex;\r\n            gap: 16px;\r\n            overflow-x: auto;\r\n            scrollbar-width: none; /* Firefox */\r\n            -ms-overflow-style: none; /* IE/Edge */\r\n            justify-content: flex-start;\r\n            flex-wrap: wrap; /* Разрешаем перенос на следующую строку если не помещаются */\r\n            max-width: 1400px; /* Ограничиваем максимальную ширину как в футере */\r\n            margin: 0 auto; /* Центрируем весь контейнер с карточками */\r\n        }\r\n\r\n        .banners-row::-webkit-scrollbar {\r\n            display: none; /* Chrome/Safari */\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<style>\r\n        .banners-container {\r\n            width: 100%;\r\n            border-radius: 12px;\r\n            padding: 20px;\r\n            margin: 20px 0;\r\n            box-shadow: 0 2px 8px rgba(0,0,0,0.05);\r\n            box-sizing: border-box;\r\n        }\r\n\r\n        .banners-row {\r\n            display: flex;\r\n            gap: 16px;\r\n            justify-content: flex-start;\r\n            flex-wrap: nowrap; /* Важно: запрещаем перенос на новую строку */\r\n            max-width: 1400px;\r\n            margin: 0 auto;\r\n        }\r\n\r\n        /* Для мобильных можно оставить прокрутку */\r\n        @media (max-width: 768px) {\r\n            .banners-row {\r\n                overflow-x: auto;\r\n                scrollbar-width: none;\r\n                -ms-overflow-style: none;\r\n                flex-wrap: nowrap;\r\n            }\r\n            \r\n            .banners-row::-webkit-scrollbar {\r\n                display: none;\r\n            }\r\n        }\r\n    </style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func Swiper(banners []types.BannerCard) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = SwiperRowStyle().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div class=\"swiper-container\"><!-- Swiper контейнер --><div class=\"swiper\"><div class=\"swiper-wrapper\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, banner := range banners {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div class=\"swiper-slide\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = BannerCard(banner).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div><!-- Пагинация (точки) --><div class=\"swiper-pagination\"></div><!-- Кнопки навигации --><div class=\"swiper-button-prev\"></div><div class=\"swiper-button-next\"></div></div></div><!-- Подключаем Swiper JS и инициализируем --><script src=\"https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js\"></script><script>\r\n        document.addEventListener('DOMContentLoaded', function() {\r\n            new Swiper('.swiper', {\r\n                loop: true, // бесконечная прокрутка\r\n                autoplay: {\r\n                    delay: 3000, // 3 секунды\r\n                },\r\n                pagination: {\r\n                    el: '.swiper-pagination',\r\n                    clickable: true,\r\n                },\r\n                navigation: {\r\n                    nextEl: '.swiper-button-next',\r\n                    prevEl: '.swiper-button-prev',\r\n                },\r\n            });\r\n        });\r\n    </script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func SwiperRowStyle() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<style>\r\n        /* Подключаем Swiper CSS */\r\n        @import url('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');\r\n        \r\n        /* Контейнер для Swiper (50% ширины) */\r\n        .swiper-container {\r\n            flex: 0 0 calc(50% - 8px); /* 50% минус половина gap */\r\n            min-width: 300px;\r\n            border-radius: 12px;\r\n            position: relative;\r\n            overflow: hidden;\r\n        }\r\n\r\n        /* Swiper занимает весь контейнер */\r\n        .swiper {\r\n            width: 100%;\r\n            height: 452px; /* Такая же высота как у BannerCard */\r\n            border-radius: 12px;\r\n        }\r\n\r\n        .swiper-slide {\r\n            display: flex;\r\n            justify-content: center;\r\n            align-items: center;\r\n            border-radius: 12px;\r\n        }\r\n\r\n        /* Стили для карточки баннера внутри слайда */\r\n        .swiper-slide .banner-card {\r\n            width: 100%;\r\n            height: 100%;\r\n            margin: 0;\r\n        }\r\n\r\n        /* Кнопки навигации */\r\n        .swiper-button-next,\r\n        .swiper-button-prev {\r\n            color: white;\r\n            background: rgba(0, 0, 0, 0.5);\r\n            width: 40px;\r\n            height: 40px;\r\n            border-radius: 50%;\r\n            opacity: 0.7;\r\n            transition: opacity 0.3s;\r\n        }\r\n\r\n        .swiper-button-next:hover,\r\n        .swiper-button-prev:hover {\r\n            opacity: 1;\r\n        }\r\n\r\n        .swiper-button-next:after,\r\n        .swiper-button-prev:after {\r\n            font-size: 18px;\r\n        }\r\n\r\n        /* Пагинация */\r\n        .swiper-pagination-bullet {\r\n            width: 10px;\r\n            height: 10px;\r\n            background: white;\r\n            opacity: 0.5;\r\n        }\r\n\r\n        .swiper-pagination-bullet-active {\r\n            opacity: 1;\r\n            background: #007bff;\r\n        }\r\n        \r\n        /* Адаптивность */\r\n        @media (max-width: 1024px) {\r\n            .swiper-container {\r\n                flex: 0 0 calc(50% - 8px);\r\n            }\r\n        }\r\n        \r\n        @media (max-width: 768px) {\r\n            .swiper-container {\r\n                flex: 0 0 100%;\r\n            }\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

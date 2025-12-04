@@ -9,6 +9,7 @@ templ BannersRow(banners []types.BannerCard) {
 			for _, banner := range banners {
 				@BannerCard(banner)
 			}
+			@Swiper(banners)
 		</div>
 	</div>
 }
@@ -16,28 +17,161 @@ templ BannersRow(banners []types.BannerCard) {
 templ BannersRowStyle() {
 	<style>
         .banners-container {
-            width: 100%; /* Растягивание на всю ширину */
-            border-radius: 12px; /* Закругление как у кнопок */
-            padding: 20px; /* Увеличим padding для лучшего визуала */
+            width: 100%;
+            border-radius: 12px;
+            padding: 20px;
             margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Лёгкая тень для глубины */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             box-sizing: border-box;
         }
 
         .banners-row {
             display: flex;
             gap: 16px;
-            overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
             justify-content: flex-start;
-            flex-wrap: wrap; /* Разрешаем перенос на следующую строку если не помещаются */
-            max-width: 1400px; /* Ограничиваем максимальную ширину как в футере */
-            margin: 0 auto; /* Центрируем весь контейнер с карточками */
+            flex-wrap: nowrap; /* Важно: запрещаем перенос на новую строку */
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .banners-row::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+        /* Для мобильных можно оставить прокрутку */
+        @media (max-width: 768px) {
+            .banners-row {
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                flex-wrap: nowrap;
+            }
+            
+            .banners-row::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    </style>
+}
+
+templ Swiper(banners []types.BannerCard) {
+	@SwiperRowStyle()
+	<div class="swiper-container">
+		<!-- Swiper контейнер -->
+		<div class="swiper">
+			<div class="swiper-wrapper">
+				for _, banner := range banners {
+					<div class="swiper-slide">
+						@BannerCard(banner)
+					</div>
+				}
+			</div>
+			<!-- Пагинация (точки) -->
+			<div class="swiper-pagination"></div>
+			<!-- Кнопки навигации -->
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+		</div>
+	</div>
+	<!-- Подключаем Swiper JS и инициализируем -->
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Swiper('.swiper', {
+                loop: true, // бесконечная прокрутка
+                autoplay: {
+                    delay: 3000, // 3 секунды
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        });
+    </script>
+}
+
+templ SwiperRowStyle() {
+	<style>
+        /* Подключаем Swiper CSS */
+        @import url('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+        
+        /* Контейнер для Swiper (50% ширины) */
+        .swiper-container {
+            flex: 0 0 calc(50% - 8px); /* 50% минус половина gap */
+            min-width: 300px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Swiper занимает весь контейнер */
+        .swiper {
+            width: 100%;
+            height: 452px; /* Такая же высота как у BannerCard */
+            border-radius: 12px;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+        }
+
+        /* Стили для карточки баннера внутри слайда */
+        .swiper-slide .banner-card {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Кнопки навигации */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            opacity: 1;
+        }
+
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 18px;
+        }
+
+        /* Пагинация */
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: white;
+            opacity: 0.5;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            background: #007bff;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .swiper-container {
+                flex: 0 0 calc(50% - 8px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .swiper-container {
+                flex: 0 0 100%;
+            }
         }
     </style>
 }
